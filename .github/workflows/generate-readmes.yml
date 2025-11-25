@@ -1,0 +1,43 @@
+name: 🖼️ Auto-Generate Directory Readmes
+
+on:
+  push:
+    branches:
+      - main  # Set this to the branch you push images to
+    paths:
+      - '**.jpg' # Only run the action if image files are changed
+      - '**.jpeg'
+      - '**.png'
+      - '**.gif'
+      - '**.webp'
+      - '**.py'   # Run if the Python script itself is updated
+
+jobs:
+  generate_readmes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # IMPORTANT: Needs write permission to commit the new READMEs
+      
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+        # Needed for the git-auto-commit-action to work correctly
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          
+      - name: ⚙️ Run README Generation Script
+        # Executes the Python script created in step 1
+        run: python generate_readmes.py
+        
+      - name: ⬆️ Commit and Push new README.md Files
+        # This third-party action commits any changes made by the script
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          # Only commit the README.md files that were created/updated
+          commit_message: "CI: Auto-generated image thumbnail README.md files"
+          file_pattern: '**/README.md'
