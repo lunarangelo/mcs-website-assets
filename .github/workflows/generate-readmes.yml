@@ -4,28 +4,36 @@ on:
   push:
     branches:
       - review
-    paths:
-      - '**.jpg' # Only run the action if image files are changed
-      - '**.jpeg'
-      - '**.png'
-      - '**.gif'
-      - '**.webp'
-      - '**.py'   # Run if the Python script itself is updated
-
+    # 🚨 ADJUSTMENT 1: Fixes the 'image deleted' issue by triggering on any change in the repository 
+    # and keeps the generate_readmes.py trigger.
+    paths-ignore:
+      - '**.md'  # Ignore changes to existing READMEs to prevent infinite loops
+      - '**.txt' # Ignore other common non-image file types (customize this list)
+    
   workflow_dispatch:
+    # Manual trigger is enabled but restricted at the job level below.
 
 jobs:
   generate_readmes:
     runs-on: ubuntu-latest
+    
+    # 🚨 ADJUSTMENT 2: Prevents the workflow from being manually run on the 'main' branch.
+    if: |
+      github.event_name != 'workflow_dispatch' || (
+        github.event_name == 'workflow_dispatch' && 
+        github.ref != 'refs/heads/main' &&
+        github.ref != 'refs/heads/final' # Add your final branch name if it's 'final'
+      )
+      
     permissions:
-      contents: write # IMPORTANT: Needs write permission to commit the new READMEs
+      contents: write
       
     steps:
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
-        # Needed for the git-auto-commit-action to work correctly
         with:
-          token: ${{ secrets.REPO_TOKEN }}
+          # 🚨 ADJUSTMENT 3: Using the correct, built-in token (secrets.GITHUB_TOKEN)
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
@@ -33,13 +41,10 @@ jobs:
           python-version: '3.x'
           
       - name: ⚙️ Run README Generation Script
-        # Executes the Python script created in step 1
         run: python generate_readmes.py
         
       - name: ⬆️ Commit and Push new README.md Files
-        # This third-party action commits any changes made by the script
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          # Only commit the README.md files that were created/updated
           commit_message: "CI: Auto-generated image thumbnail README.md files"
           file_pattern: '**/README.md'
