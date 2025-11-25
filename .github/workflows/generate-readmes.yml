@@ -12,6 +12,8 @@ on:
       - '**.webp'
       - '**.py'   # Run if the Python script itself is updated
 
+  workflow_dispatch:
+
 jobs:
   generate_readmes:
     runs-on: ubuntu-latest
