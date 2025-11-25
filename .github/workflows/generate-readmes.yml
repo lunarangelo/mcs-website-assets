@@ -3,7 +3,7 @@ name: 🖼️ Auto-Generate Directory Readmes
 on:
   push:
     branches:
-      - main  # Set this to the branch you push images to
+      - review
     paths:
       - '**.jpg' # Only run the action if image files are changed
       - '**.jpeg'
@@ -11,6 +11,8 @@ on:
       - '**.gif'
       - '**.webp'
       - '**.py'   # Run if the Python script itself is updated
+
+  workflow_dispatch:
 
 jobs:
   generate_readmes:
