@@ -22,7 +22,7 @@ jobs:
       github.event_name != 'workflow_dispatch' || (
         github.event_name == 'workflow_dispatch' && 
         github.ref != 'refs/heads/main' &&
-        github.ref != 'refs/heads/final' # Add your final branch name if it's 'final'
+        github.ref != 'refs/heads/final'
       )
       
     permissions:
