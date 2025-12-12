@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - review
-    # 🚨 ADJUSTMENT 1: Fixes the 'image deleted' issue by triggering on any change in the repository 
-    # and keeps the generate_readmes.py trigger.
+    # Fixes the 'image deleted' issue by triggering on any change in the repository
     paths-ignore:
       - '**.md'  # Ignore changes to existing READMEs to prevent infinite loops
       - '**.txt' # Ignore other common non-image file types (customize this list)
@@ -17,7 +16,7 @@ jobs:
   generate_readmes:
     runs-on: ubuntu-latest
     
-    # 🚨 ADJUSTMENT 2: Prevents the workflow from being manually run on the 'main' branch.
+    # Prevents the workflow from being manually run on the 'main' or 'final' branches.
     if: |
       github.event_name != 'workflow_dispatch' || (
         github.event_name == 'workflow_dispatch' && 
@@ -32,7 +31,7 @@ jobs:
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
         with:
-          # 🚨 ADJUSTMENT 3: Using the correct, built-in token (secrets.GITHUB_TOKEN)
+          # Use the correct, built-in token
           token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: 🐍 Set up Python
@@ -43,8 +42,41 @@ jobs:
       - name: ⚙️ Run README Generation Script
         run: python generate_readmes.py
         
-      - name: ⬆️ Commit and Push new README.md Files
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "CI: Auto-generated image thumbnail README.md files"
-          file_pattern: '**/README.md'
+      # -----------------------------------------------------------------
+      # NEW ROBUST COMMIT AND PUSH STEP
+      # This step replaces stefanzweifel/git-auto-commit-action to ensure 
+      # the generated README.md files are properly detected and committed.
+      # -----------------------------------------------------------------
+      - name: ⬆️ Explicitly Commit and Push Generated READMEs
+        id: commit_push
+        run: |
+          # 1. Check status (for debugging and confirming file existence)
+          echo "--- Checking Git Status BEFORE Commit ---"
+          git status
+          
+          # 2. Configure Git user for the commit
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # 3. Add ONLY the generated README.md files, using --force to ensure new/changed files are staged
+          git add --force **/README.md
+          
+          # 4. Check status again (to confirm files were added)
+          echo "--- Checking Git Status AFTER Add ---"
+          git status
+          
+          # 5. Commit ONLY if there are staged changes (non-zero exit code means no changes)
+          # We check if a commit operation would actually change anything
+          if git commit --dry-run --allow-empty --message "CI: Auto-generated image thumbnail README.md files" ; then
+            echo "Changes detected and staged. Committing..."
+            git commit --message "CI: Auto-generated image thumbnail README.md files"
+            
+            # 6. Push the changes to the current branch (e.g., 'review')
+            echo "Pushing changes back to the remote repository..."
+            git push origin ${{ github.ref_name }}
+            
+            echo "::set-output name=files_committed::true"
+          else
+            echo "No changes detected after 'git add'. Skipping commit."
+            echo "::set-output name=files_committed::false"
+          fi
