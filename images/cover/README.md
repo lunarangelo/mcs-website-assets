@@ -3,14 +3,10 @@
 <table>
   <tr>
     <td align="center" style="border: none;"><a href="elem_banner.webp"><img src="elem_banner.webp" width="150" height="150" alt="elem_banner.webp" style="object-fit: cover; margin: 5px;"></a></td>
-    <td align="center" style="border: none;"><a href="hero_image.webp"><img src="hero_image.webp" width="150" height="150" alt="hero_image.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="jhs_banner.webp"><img src="jhs_banner.webp" width="150" height="150" alt="jhs_banner.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="prep_kinder_banner.webp"><img src="prep_kinder_banner.webp" width="150" height="150" alt="prep_kinder_banner.webp" style="object-fit: cover; margin: 5px;"></a></td>
+    <td align="center" style="border: none;"><a href="shs_banner.webp"><img src="shs_banner.webp" width="150" height="150" alt="shs_banner.webp" style="object-fit: cover; margin: 5px;"></a></td>
   </tr>
   <tr>
-    <td align="center" style="border: none;"><a href="shs_banner.webp"><img src="shs_banner.webp" width="150" height="150" alt="shs_banner.webp" style="object-fit: cover; margin: 5px;"></a></td>
-    <td style="border: none;"></td>
-    <td style="border: none;"></td>
-    <td style="border: none;"></td>
   </tr>
 </table>
