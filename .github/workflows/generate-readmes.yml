@@ -4,20 +4,19 @@ on:
   push:
     branches:
       - review
-    # 🚨 ADJUSTMENT 1: Fixes the 'image deleted' issue by triggering on any change in the repository 
-    # and keeps the generate_readmes.py trigger.
+    # Triggers on code changes, but ignores changes to existing text files to prevent infinite loops.
     paths-ignore:
-      - '**.md'  # Ignore changes to existing READMEs to prevent infinite loops
-      - '**.txt' # Ignore other common non-image file types (customize this list)
+      - '**.md'  
+      - '**.txt' 
     
   workflow_dispatch:
-    # Manual trigger is enabled but restricted at the job level below.
+    # Allows manual runs.
 
 jobs:
   generate_readmes:
     runs-on: ubuntu-latest
     
-    # 🚨 ADJUSTMENT 2: Prevents the workflow from being manually run on the 'main' branch.
+    # Restricts manual runs to branches other than 'main' and 'final'.
     if: |
       github.event_name != 'workflow_dispatch' || (
         github.event_name == 'workflow_dispatch' && 
@@ -26,13 +25,13 @@ jobs:
       )
       
     permissions:
-      contents: write
+      contents: write # Crucial permission needed for pushing commits
       
     steps:
       - name: ⬇️ Checkout Repository
         uses: actions/checkout@v4
         with:
-          # 🚨 ADJUSTMENT 3: Using the correct, built-in token (secrets.GITHUB_TOKEN)
+          # Use the built-in token for authentication
           token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: 🐍 Set up Python
@@ -43,8 +42,37 @@ jobs:
       - name: ⚙️ Run README Generation Script
         run: python generate_readmes.py
         
-      - name: ⬆️ Commit and Push new README.md Files
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "CI: Auto-generated image thumbnail README.md files"
-          file_pattern: '**/README.md'
+      # -----------------------------------------------------------------
+      # CORRECTED AND ROBUST GIT COMMIT AND PUSH STEP
+      # This addresses the 'nothing to commit' error by fixing the git add command.
+      # -----------------------------------------------------------------
+      - name: ⬆️ Explicitly Commit and Push Generated READMEs (FIXED)
+        id: commit_push
+        run: |
+          # 1. Check status (for initial debugging)
+          echo "--- Checking Git Status BEFORE Commit ---"
+          git status
+          
+          # 2. Configure Git user for the commit
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # 3. CRITICAL FIX: Use Git's native pathspec to reliably stage files recursively.
+          # The previous '**/README.md' failed because the shell didn't expand it correctly.
+          git add --force . ':(glob)**/README.md'
+          
+          # 4. Check status again (to CONFIRM files are staged)
+          echo "--- Checking Git Status AFTER ADD (Should show Staged Changes) ---"
+          git status
+          
+          # 5. Commit ONLY if there are staged changes
+          if git commit --dry-run --allow-empty --message "CI: Auto-generated image thumbnail README.md files" ; then
+            echo "Changes detected and staged. Committing..."
+            git commit --message "CI: Auto-generated image thumbnail README.md files"
+            
+            # 6. Push the changes to the current branch (e.g., 'review')
+            echo "Pushing changes back to the remote repository..."
+            git push origin ${{ github.ref_name }}
+          else
+            echo "No changes detected after 'git add'. Skipping commit."
+          fi
