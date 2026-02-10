@@ -41,20 +41,18 @@
     <td align="center" style="border: none;"><a href="melissa_ann_maquiling.webp"><img src="melissa_ann_maquiling.webp" width="150" height="150" alt="melissa_ann_maquiling.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="merly_abasola.webp"><img src="merly_abasola.webp" width="150" height="150" alt="merly_abasola.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="michelle_bule.webp"><img src="michelle_bule.webp" width="150" height="150" alt="michelle_bule.webp" style="object-fit: cover; margin: 5px;"></a></td>
-    <td align="center" style="border: none;"><a href="narcisa_cervera.webp"><img src="narcisa_cervera.webp" width="150" height="150" alt="narcisa_cervera.webp" style="object-fit: cover; margin: 5px;"></a></td>
+    <td align="center" style="border: none;"><a href="rafael_cervera.webp"><img src="rafael_cervera.webp" width="150" height="150" alt="rafael_cervera.webp" style="object-fit: cover; margin: 5px;"></a></td>
   </tr>
   <tr>
-    <td align="center" style="border: none;"><a href="rafael_cervera.webp"><img src="rafael_cervera.webp" width="150" height="150" alt="rafael_cervera.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="raulin_castillio.webp"><img src="raulin_castillio.webp" width="150" height="150" alt="raulin_castillio.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="recto_pingo.webp"><img src="recto_pingo.webp" width="150" height="150" alt="recto_pingo.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="rene_gallego.webp"><img src="rene_gallego.webp" width="150" height="150" alt="rene_gallego.webp" style="object-fit: cover; margin: 5px;"></a></td>
+    <td align="center" style="border: none;"><a href="rhabbi_angelo_adora.webp"><img src="rhabbi_angelo_adora.webp" width="150" height="150" alt="rhabbi_angelo_adora.webp" style="object-fit: cover; margin: 5px;"></a></td>
   </tr>
   <tr>
-    <td align="center" style="border: none;"><a href="rhabbi_angelo_adora.webp"><img src="rhabbi_angelo_adora.webp" width="150" height="150" alt="rhabbi_angelo_adora.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="robert_quintayo.webp"><img src="robert_quintayo.webp" width="150" height="150" alt="robert_quintayo.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="shannon_elysse _sornillio.webp"><img src="shannon_elysse _sornillio.webp" width="150" height="150" alt="shannon_elysse _sornillio.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="sheryl_terencio.webp"><img src="sheryl_terencio.webp" width="150" height="150" alt="sheryl_terencio.webp" style="object-fit: cover; margin: 5px;"></a></td>
-  </tr>
-  <tr>
+    <td style="border: none;"></td>
   </tr>
 </table>
