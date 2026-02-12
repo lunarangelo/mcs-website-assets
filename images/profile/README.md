@@ -20,7 +20,7 @@
     <td align="center" style="border: none;"><a href="ginajane_eclarinal.webp"><img src="ginajane_eclarinal.webp" width="150" height="150" alt="ginajane_eclarinal.webp" style="object-fit: cover; margin: 5px;"></a></td>
   </tr>
   <tr>
-    <td align="center" style="border: none;"><a href="janine_antonette_dela.webp"><img src="janine_antonette_dela.webp" width="150" height="150" alt="janine_antonette_dela.webp" style="object-fit: cover; margin: 5px;"></a></td>
+    <td align="center" style="border: none;"><a href="janine_antonette_dela_cruz.webp"><img src="janine_antonette_dela_cruz.webp" width="150" height="150" alt="janine_antonette_dela_cruz.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="jocelyn_paltep.webp"><img src="jocelyn_paltep.webp" width="150" height="150" alt="jocelyn_paltep.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="jordan_nycol_ asis.webp"><img src="jordan_nycol_ asis.webp" width="150" height="150" alt="jordan_nycol_ asis.webp" style="object-fit: cover; margin: 5px;"></a></td>
     <td align="center" style="border: none;"><a href="josie_sumagaysay.webp"><img src="josie_sumagaysay.webp" width="150" height="150" alt="josie_sumagaysay.webp" style="object-fit: cover; margin: 5px;"></a></td>
